@@ -58,3 +58,7 @@ Why:
 ## High-Level Architecture Diagram
 
 <img src="./diagrams/architecture-overview.svg" alt="Architecture overview diagram" width="1200" />
+
+## Networking Diagram (Spain + Mexico)
+
+<img src="./diagrams/networking-es-mx.svg" alt="Networking diagram for Spain and Mexico" width="1400" />

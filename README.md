@@ -32,6 +32,10 @@ terraform/
 
 <img src="./diagrams/architecture-overview.svg" alt="Architecture overview diagram" width="1200" />
 
+## Networking Diagram (Spain + Mexico)
+
+<img src="./diagrams/networking-es-mx.svg" alt="Networking diagram for Spain and Mexico" width="1400" />
+
 ## Delivery Notes
 - Docker and Kubernetes base setup was prepared for a lightweight app image and non-root runtime.
 - Helm chart was organized under `k8s/go-webapp` with templates and values.
@@ -62,3 +66,6 @@ terraform/
 
 ### Latency
 <img src="./diagrams/latency-budget.svg" alt="Latency budget diagram" width="1200" />
+
+### Networking (ES + MX)
+<img src="./diagrams/networking-es-mx.svg" alt="Networking diagram for Spain and Mexico" width="1400" />
