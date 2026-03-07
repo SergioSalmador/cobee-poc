@@ -1,0 +1,22 @@
+digraph G {
+  rankdir=TB;
+  graph [fontname="Arial", bgcolor="white", pad="0.2", nodesep="0.45", ranksep="0.55"];
+  node [shape=box, style="rounded,filled", color="#1f2937", fillcolor="#f8fafc", fontname="Arial", fontsize=11];
+  edge [color="#334155", penwidth=1.2, arrowsize=0.7];
+
+  users [label="Users"];
+  albctl [label="AWS Load Balancer Controller"];
+  alb [label="ALB Ingress"];
+  app [label="EKS: go-webapp\nDeployment + Service + HPA + PDB"];
+  sa [label="ServiceAccount (IRSA)"];
+  ext [label="External Secrets"];
+  sm [label="AWS Secrets Manager"];
+  rds [label="RDS PostgreSQL\nMulti-AZ, private subnets"];
+
+  users -> albctl -> alb -> app;
+  app -> sa;
+  app -> ext;
+  ext -> sm;
+  app -> rds;
+  rds -> sm [style=dashed, label="managed DB secret", fontsize=9];
+}

@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: cobee-apps-pro
+  namespace: argocd
+spec:
+  description: Root project for cobee-apps PRO
+  sourceRepos:
+    - '*'
+  destinations:
+    - namespace: argocd
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cobee-apps-pro
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: cobee-apps
+    app.kubernetes.io/part-of: cobee-apps-of-apps
+    env: pro
+spec:
+  project: cobee-apps-pro
+  source:
+    repoURL: https://github.com/your-org/your-repo.git
+    targetRevision: main
+    path: k8s/argocd/pro
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=false
+      - FailOnSharedResource=true
+      - ApplyOutOfSyncOnly=true
+      - ServerSideApply=true

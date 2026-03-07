@@ -1,0 +1,6 @@
+apiVersion: v2
+name: go-webapp
+description: Helm chart for go-webapp-sample on Kubernetes (Deployment, Service, ALB Ingress, HPA, PDB)
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

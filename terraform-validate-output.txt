@@ -1,0 +1,83 @@
+Terraform validate report (Terraform 1.11.1) - 2026-03-07T10:45:55Z
+
+=== terraform/dev/es/networking/vpc ===
+Success! The configuration is valid.
+
+RESULT: OK
+
+=== terraform/dev/mx/networking/vpc ===
+Success! The configuration is valid.
+
+RESULT: OK
+
+=== terraform/prod/es/networking/vpc ===
+Success! The configuration is valid.
+
+RESULT: OK
+
+=== terraform/prod/mx/networking/vpc ===
+Success! The configuration is valid.
+
+RESULT: OK
+
+=== terraform/dev/es/eks/cluster ===
+Success! The configuration is valid.
+
+RESULT: OK
+
+=== terraform/dev/mx/eks/cluster ===
+Success! The configuration is valid.
+
+RESULT: OK
+
+=== terraform/prod/es/eks/cluster ===
+Success! The configuration is valid.
+
+RESULT: OK
+
+=== terraform/prod/mx/eks/cluster ===
+Success! The configuration is valid.
+
+RESULT: OK
+
+=== terraform/dev/es/eks/iam-roles-app ===
+Success! The configuration is valid.
+
+RESULT: OK
+
+=== terraform/dev/mx/eks/iam-roles-app ===
+Success! The configuration is valid.
+
+RESULT: OK
+
+=== terraform/prod/es/eks/iam-roles-app ===
+Success! The configuration is valid.
+
+RESULT: OK
+
+=== terraform/prod/mx/eks/iam-roles-app ===
+Success! The configuration is valid.
+
+RESULT: OK
+
+=== terraform/dev/es/rds/go-webapp ===
+Success! The configuration is valid.
+
+RESULT: OK
+
+=== terraform/dev/mx/rds/go-webapp ===
+Success! The configuration is valid.
+
+RESULT: OK
+
+=== terraform/prod/es/rds/go-webapp ===
+Success! The configuration is valid.
+
+RESULT: OK
+
+=== terraform/prod/mx/rds/go-webapp ===
+Success! The configuration is valid.
+
+RESULT: OK
+
+overall_exit_code=0

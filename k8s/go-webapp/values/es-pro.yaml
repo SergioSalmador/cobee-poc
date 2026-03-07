@@ -1,0 +1,15 @@
+fullnameOverride: go-webapp-es-pro
+
+config:
+  env:
+    WEB_APP_ENV: "k8s"
+    APP_ENV: "pro"
+    APP_COUNTRY: "es"
+
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::123456789012:role/go-webapp-es-pro-irsa-role
+
+ingress:
+  annotations:
+    alb.ingress.kubernetes.io/group.name: go-webapp-es-pro

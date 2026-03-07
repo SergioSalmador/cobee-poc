@@ -1,0 +1,60 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: go-webapp-mx-dev
+  namespace: argocd
+spec:
+  description: Project for go-webapp MX DEV
+  sourceRepos:
+    - '*'
+  destinations:
+    - namespace: go-webapp-mx-dev
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: go-webapp-mx-dev
+  namespace: argocd
+  labels:
+    app: go-webapp
+    env: dev
+    country: mx
+spec:
+  project: go-webapp-mx-dev
+  source:
+    repoURL: https://github.com/your-org/your-repo.git
+    targetRevision: main
+    path: k8s/go-webapp
+    helm:
+      valueFiles:
+        - values/mx-dev.yaml
+      valuesObject:
+        fullnameOverride: go-webapp-mx-dev
+        serviceAccount:
+          annotations:
+            eks.amazonaws.com/role-arn: arn:aws:iam::123456789012:role/go-webapp-mx-dev-irsa-role
+        ingress:
+          annotations:
+            alb.ingress.kubernetes.io/group.name: go-webapp-mx-dev
+        externalSecrets:
+          secretStore:
+            aws:
+              region: us-east-1
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: go-webapp-mx-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - FailOnSharedResource=true
+      - ApplyOutOfSyncOnly=true

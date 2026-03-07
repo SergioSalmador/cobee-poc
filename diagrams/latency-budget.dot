@@ -1,0 +1,15 @@
+digraph G {
+  rankdir=LR;
+  graph [fontname="Arial", bgcolor="white", pad="0.2", nodesep="0.6", ranksep="0.7"];
+  node [shape=box, style="rounded,filled", color="#1f2937", fillcolor="#f8fafc", fontname="Arial", fontsize=11];
+  edge [color="#334155", penwidth=1.2, arrowsize=0.7];
+
+  c [label="Client"];
+  a [label="ALB\n15-25 ms"];
+  p [label="App\n20-35 ms"];
+  d [label="DB\n15-30 ms"];
+  t [label="Target\nTotal < 100 ms", fillcolor="#dcfce7", color="#16a34a"];
+
+  c -> a -> p -> d -> p -> a -> c;
+  d -> t [style=dashed];
+}
