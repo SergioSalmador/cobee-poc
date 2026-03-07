@@ -55,23 +55,6 @@ Why:
 - Fine-grained permission model.
 - Better security and auditability.
 
-## High-Level Architecture Sketch
+## High-Level Architecture Diagram
 
-```text
-Internet
-  |
-AWS ALB Ingress Controller
-  |
-ALB
-  |
-EKS (namespace: go-webapp)
-  |-- Deployment (replicas)
-  |-- Service
-  |-- HPA
-  |-- PDB
-  |-- ServiceAccount (IRSA)
-  |
-  +--> External Secrets --> AWS Secrets Manager
-
-EKS private network --> RDS PostgreSQL (Multi-AZ, private)
-```
+<img src="./diagrams/architecture-overview.svg" alt="Architecture overview diagram" width="1200" />

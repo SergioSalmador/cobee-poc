@@ -53,15 +53,6 @@ Database calls are often the main source of latency.
 Reason:
 Without metrics, we cannot control latency over time.
 
-## Target Budget Example
+## Target Budget Diagram
 
-```text
-Client -> ALB -> App -> DB -> App -> ALB -> Client
-
-Network + ALB:       15-25 ms
-App processing:      20-35 ms
-DB query:            15-30 ms
-Safety margin:       10-20 ms
----------------------------------
-Total target:        < 100 ms
-```
+<img src="./diagrams/latency-budget.svg" alt="Latency budget diagram" width="1200" />

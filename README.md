@@ -28,24 +28,9 @@ terraform/
       rds/go-webapp/
 ```
 
-## Architecture Sketch
+## Architecture Diagram
 
-```text
-Users
-  |
-  v
-AWS ALB Ingress
-  |
-  v
-EKS (go-webapp)
-  |-- Deployment / Service / HPA / PDB
-  |-- ServiceAccount with IRSA
-  |
-  +--> External Secrets --> AWS Secrets Manager
-                                ^
-                                |
-                           RDS PostgreSQL (Multi-AZ)
-```
+<img src="./diagrams/architecture-overview.svg" alt="Architecture overview diagram" width="1200" />
 
 ## Delivery Notes
 - Docker and Kubernetes base setup was prepared for a lightweight app image and non-root runtime.
@@ -69,6 +54,11 @@ EKS (go-webapp)
 
 
 ## Diagrams (Image Files)
-- [Architecture Overview](./diagrams/architecture-overview.svg)
-- [Secret Flow](./diagrams/secret-flow.svg)
-- [Latency Budget](./diagrams/latency-budget.svg)
+### Architecture
+<img src="./diagrams/architecture-overview.svg" alt="Architecture overview diagram" width="1200" />
+
+### Secrets
+<img src="./diagrams/secret-flow.svg" alt="Secret flow diagram" width="1200" />
+
+### Latency
+<img src="./diagrams/latency-budget.svg" alt="Latency budget diagram" width="1200" />

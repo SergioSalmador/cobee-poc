@@ -35,17 +35,6 @@ Use AWS Secrets Manager + External Secrets + IRSA.
 - Risk: namespace/serviceAccount mismatch for IRSA.
   Mitigation: standard naming in Helm values.
 
-## Simple Flow Sketch
+## Secret Flow Diagram
 
-```text
-RDS -> Secrets Manager (DB secret)
-                      |
-                      v
-               External Secrets
-                      |
-                      v
-              Kubernetes Secret
-                      |
-                      v
-                 go-webapp Pod
-```
+<img src="./diagrams/secret-flow.svg" alt="Secret flow diagram" width="1200" />
