@@ -63,6 +63,27 @@ Why:
 - Fine-grained permission model.
 - Better security and auditability.
 
+## Decision 8: Private VPC Networking
+Application components run inside private subnets within a dedicated VPC per region.
+
+Why:
+- Prevents direct public access to compute and databases.
+- Ensures that application traffic (pods -> database) remains inside the AWS private network.
+- Enables strict security group controls between services.
+
+Public subnets are used only for the Application Load Balancer.
+All workloads and databases remain private.
+
+## Decision 9: External Secrets with AWS Secrets Manager
+Application secrets are stored in AWS Secrets Manager and injected into Kubernetes using External Secrets Operator.
+
+Why:
+- Secrets are never stored in Git.
+- Centralized secret storage in AWS.
+- Kubernetes applications receive secrets dynamically.
+
+Access is controlled through IAM Roles for Service Accounts (IRSA).
+
 ## Data Residency Note
 Country split is used to keep each country data path in its regional setup.
 This supports local policy requirements and lower risk of cross-country data movement.

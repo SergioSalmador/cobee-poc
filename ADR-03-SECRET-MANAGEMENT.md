@@ -23,6 +23,16 @@ Use AWS Secrets Manager + External Secrets + IRSA.
 - Secrets stay encrypted at rest in AWS.
 - Access is auditable with AWS logs.
 
+## IAM Access Model
+Access to secrets is controlled through IAM Roles for Service Accounts (IRSA).
+
+The application ServiceAccount is associated with a dedicated IAM role that allows:
+
+- `secretsmanager:GetSecretValue`
+- `secretsmanager:DescribeSecret`
+
+Permissions are scoped to specific secret ARNs to enforce least privilege.
+
 ## Data Residency and Secrets
 Secret access follows country/environment boundaries.
 Each app stack reads only the secrets it needs in its own regional setup.

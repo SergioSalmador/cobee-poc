@@ -55,6 +55,8 @@ Folder split is intentional:
 - `country` (`es`/`mx`) separates regional resources and data scope.
 - Same pattern in each path improves reuse and automation.
 
+<img src="./diagrams/terraform-folder-structure.svg" alt="Terraform folder structure by environment and country" width="1400" />
+
 Example:
 
 ```text
