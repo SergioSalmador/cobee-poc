@@ -1,24 +1,63 @@
-# Go Webapp Platform - Implementation Summary
+# Go Webapp Platform - Multi-Region Implementation
 
 This repository contains the platform setup for `go-webapp` on AWS.
-It includes Kubernetes, GitOps, and Terraform infrastructure for two environments and two countries.
+The solution is **multi-region** and **multi-environment**.
 
-## Scope
-- Kubernetes app deployment with Helm.
-- Argo CD applications per environment and country.
-- AWS infrastructure with Terraform/Terragrunt:
-  - VPC networking
-  - EKS cluster
-  - IRSA role for app
-  - RDS PostgreSQL Multi-AZ
+- Countries: Spain (`es`) and Mexico (`mx`)
+- Environments: `dev` and `prod`
 
-## Folder Overview
+## Main Objective
+The platform is designed to keep API latency under **100 ms** for common requests.
+
+## Multi-Region Architecture
+We run the same platform pattern in two regions:
+- Spain traffic in EU region
+- Mexico traffic in a US region close to Mexico
+
+This reduces network distance and improves user response time.
+
+<img src="./diagrams/architecture-overview.svg" alt="Architecture overview diagram" width="1200" />
+
+## Networking by Country
+Each country has its own VPC and private resources.
+
+<img src="./diagrams/networking-es-mx.svg" alt="Networking diagram for Spain and Mexico" width="1400" />
+
+## Data Residency
+Data residency is handled by country isolation:
+- ES workloads and ES database stay in ES region setup.
+- MX workloads and MX database stay in MX region setup.
+- No direct cross-country VPC data path is configured by default.
+
+This model helps with local data policy and operational isolation.
+
+## Secret Management
+Secrets are managed with AWS-native controls:
+- RDS managed master password in AWS Secrets Manager.
+- IRSA role for app access (no static AWS keys in pods).
+- External Secrets to sync secret values into Kubernetes.
+
+<img src="./diagrams/secret-flow.svg" alt="Secret flow diagram" width="1200" />
+
+## Latency Strategy (< 100 ms)
+Main actions to keep latency below 100 ms:
+- Region placement close to users.
+- Private traffic path (ALB -> EKS -> RDS private).
+- HPA for CPU/memory scaling.
+- Readiness/liveness probes for healthy routing.
+- DB query optimization and observability (p50/p95/p99).
+
+<img src="./diagrams/latency-budget.svg" alt="Latency budget diagram" width="1200" />
+
+## Why Folder Structure Is Split by Env and Country
+Folder split is intentional:
+- `env` (`dev`/`prod`) separates lifecycle and risk.
+- `country` (`es`/`mx`) separates regional resources and data scope.
+- Same pattern in each path improves reuse and automation.
+
+Example:
 
 ```text
-k8s/
-  go-webapp/              # Helm chart
-  argocd/                 # Argo CD applications
-
 terraform/
   dev|prod/
     es|mx/
@@ -28,26 +67,14 @@ terraform/
       rds/go-webapp/
 ```
 
-## Architecture Diagram
+## Kubernetes and GitOps Scope
+- Helm chart: `k8s/go-webapp`
+- Argo CD applications: `k8s/argocd`
 
-<img src="./diagrams/architecture-overview.svg" alt="Architecture overview diagram" width="1200" />
-
-## Networking Diagram (Spain + Mexico)
-
-<img src="./diagrams/networking-es-mx.svg" alt="Networking diagram for Spain and Mexico" width="1400" />
-
-## Delivery Notes
-- Docker and Kubernetes base setup was prepared for a lightweight app image and non-root runtime.
-- Helm chart was organized under `k8s/go-webapp` with templates and values.
-- Argo CD structure was created by environment and country.
-- Terraform/Terragrunt structure was created with global, environment, and country settings.
-- RDS uses PostgreSQL in Multi-AZ and private subnets.
-- Secret strategy is based on RDS-managed password + IRSA + External Secrets.
-
-## Important Inputs to Set Before Apply
-- Real security group IDs in each `rds-common.hcl` (`eks_node_security_group_ids`).
-- Real domain/certificate details for ALB ingress values.
-- Real secret references in External Secrets values if names differ.
+## ADR Links
+- [ADR-01-DECISIONS.md](./ADR-01-DECISIONS.md)
+- [ADR-02-LATENCY-STRATEGY.md](./ADR-02-LATENCY-STRATEGY.md)
+- [ADR-03-SECRET-MANAGEMENT.md](./ADR-03-SECRET-MANAGEMENT.md)
 
 ## Suggested Apply Order
 1. `networking/vpc`
@@ -55,17 +82,3 @@ terraform/
 3. `rds/go-webapp`
 4. `eks/iam-roles-app`
 5. Argo CD sync for app resources
-
-
-## Diagrams (Image Files)
-### Architecture
-<img src="./diagrams/architecture-overview.svg" alt="Architecture overview diagram" width="1200" />
-
-### Secrets
-<img src="./diagrams/secret-flow.svg" alt="Secret flow diagram" width="1200" />
-
-### Latency
-<img src="./diagrams/latency-budget.svg" alt="Latency budget diagram" width="1200" />
-
-### Networking (ES + MX)
-<img src="./diagrams/networking-es-mx.svg" alt="Networking diagram for Spain and Mexico" width="1400" />

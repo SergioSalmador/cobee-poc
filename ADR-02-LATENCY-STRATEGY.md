@@ -4,7 +4,12 @@ Date: 2026-03-07
 Status: Accepted
 
 ## Goal
-Keep end-user API latency below 100 ms for common requests.
+Keep end-user API latency below **100 ms** for common requests.
+
+## Why This Is Important
+- Better user experience.
+- Better API stability under load.
+- Better conversion and lower error impact.
 
 ## Strategy
 
@@ -56,3 +61,7 @@ Without metrics, we cannot control latency over time.
 ## Target Budget Diagram
 
 <img src="./diagrams/latency-budget.svg" alt="Latency budget diagram" width="1200" />
+
+## Related ADRs
+- [ADR-01-DECISIONS.md](./ADR-01-DECISIONS.md)
+- [ADR-03-SECRET-MANAGEMENT.md](./ADR-03-SECRET-MANAGEMENT.md)

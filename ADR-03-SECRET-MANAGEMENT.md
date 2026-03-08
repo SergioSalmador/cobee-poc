@@ -23,6 +23,10 @@ Use AWS Secrets Manager + External Secrets + IRSA.
 - Secrets stay encrypted at rest in AWS.
 - Access is auditable with AWS logs.
 
+## Data Residency and Secrets
+Secret access follows country/environment boundaries.
+Each app stack reads only the secrets it needs in its own regional setup.
+
 ## Rotation model
 - RDS-managed secret rotation can be enabled.
 - App consumes latest values through External Secrets sync.
@@ -38,3 +42,7 @@ Use AWS Secrets Manager + External Secrets + IRSA.
 ## Secret Flow Diagram
 
 <img src="./diagrams/secret-flow.svg" alt="Secret flow diagram" width="1200" />
+
+## Related ADRs
+- [ADR-01-DECISIONS.md](./ADR-01-DECISIONS.md)
+- [ADR-02-LATENCY-STRATEGY.md](./ADR-02-LATENCY-STRATEGY.md)
